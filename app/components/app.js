@@ -7,6 +7,7 @@ const Popular = require('./Popular')
 const Nav = require('./Nav')
 const Home = require('./Home')
 const Battle = require('./Battle')
+import Results from './Results'
 
 
 class App extends Component {
@@ -18,6 +19,7 @@ class App extends Component {
             <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path ="/battle" component={Battle} />
+            <Route path="/battle/results" component={Results} />
             <Route  path="/popular" component={Popular} />
             <Route render={ function() {
               return <p>Not Found</p>

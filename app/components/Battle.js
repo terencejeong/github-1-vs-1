@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; 
+import { Link } from 'react-router-dom';
 var PropTypes = require('prop-types');
 
 
@@ -53,7 +54,8 @@ class PlayerInput extends Component {
 
     handleSubmit(event){
         event.preventDefault(); 
-        // onSubmit is the function passed to this component from Battle class. Can call it anything, but this is the pattern.
+        // onSubmit is the function passed to this component from Battle class. 
+        //Can call it anything, but this is the pattern when dealing with forms. 
         this.props.onSubmit(
             this.props.id, 
             this.state.username
@@ -122,6 +124,7 @@ class Battle extends Component {
         })
     }
     render() {
+        const match = this.props.match
         const playerOneName = this.state.playerOneName;
         const playerTwoName = this.state.playerTwoName; 
         const playerOneImage = this.state.playerOneImage; 
@@ -144,8 +147,11 @@ class Battle extends Component {
                             onReset={this.handleReset}
                             id='playerOne' />
                     }
-                  
 
+                    {playerOneImage && playerTwoImage &&
+                  <h1>VS.</h1>
+                    }
+                    
                     {!playerTwoName && 
                     <PlayerInput 
                         id="playerTwo"
@@ -161,8 +167,17 @@ class Battle extends Component {
                             id='playerTwo' />
                     }
                 </div>
+
+                {/* pasing along a query string to button, to pass to results component. */}
                 {playerOneImage && playerTwoImage &&
-                    <button className="button">Battle</button>
+                    <Link
+                     className="button"
+                      to={{
+                        pathname: `${match.url}/results`, 
+                        search:`?playerOneName=${playerOneName}&playerTwoName=${playerTwoName}`
+                        }} >
+                        Battle
+                    </Link>
                 }
                 
             </div>
