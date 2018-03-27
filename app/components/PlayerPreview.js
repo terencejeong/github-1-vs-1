@@ -13,6 +13,7 @@ function PlayerPreview(props) {
                 />
                 <h2 className="username">@{props.username}</h2>
             </div>
+            {/* allows us flexibility with our components.  */}
             {props.children}
         </div>
     )

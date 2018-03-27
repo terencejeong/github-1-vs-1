@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loading from './Loading'
 var PropTypes = require('prop-types');
 var api = require('../utils/api')
 
@@ -38,7 +39,7 @@ function RepoGrid(props) {
                 alt={repo.owner.login}
                  />
               </li>
-              <li a href={repo.html_url}>{repo.name}</li>
+              <li href={repo.html_url}>{repo.name}</li>
               <li>{repo.stargazers_count} stars</li>
             </ul>
         </li>
@@ -95,7 +96,7 @@ class Popular extends Component {
       />
 
       {!this.state.repos
-        ? <p>Loading</p>
+        ? <Loading text="Downloading" speed={300}/>
       : <RepoGrid repos={this.state.repos} />}
 
     </div>

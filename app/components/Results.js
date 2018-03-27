@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import queryString from 'query-string'; 
 import PropTypes from 'prop-types';
-import PlayerPreview from './PlayerPreview'
+import PlayerPreview from './PlayerPreview'; 
+import Loading from './Loading';
 const api = require('../utils/api')
 
 const Profile = (props) => {
     const {info} = props
-    console.log(info)
+    console.log('props to profile',info)
     return (
         <div>
             <PlayerPreview username={info.login} avatar={info.avatar_url}> 
@@ -86,7 +87,7 @@ class Results extends Component {
         const loading = this.state.loading; 
 
         if (loading === true) {
-            return <p>Loading</p>
+            return <Loading />
         }
 
         if (error) {
