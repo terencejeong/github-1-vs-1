@@ -39,7 +39,6 @@ class Loading extends Component {
 
     // Have to unmount otherwise the function this.interval will run every 300ms
     componentWillUnmount(){
-        console.log('COMPONENT HAS UNMOUNTED')
         window.clearInterval(this.interval)
     }
     

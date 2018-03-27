@@ -8,7 +8,7 @@ const api = require('../utils/api')
 
 const Profile = (props) => {
     const {info} = props
-    console.log('props to profile',info)
+    
     return (
         <div>
             <PlayerPreview username={info.login} avatar={info.avatar_url}> 

@@ -84,7 +84,7 @@ class Popular extends Component {
         }
       })
     })
-    console.log('selected lang', lang)
+   
   }
 
   render() {

@@ -5,7 +5,6 @@ var axios = require('axios')
 function getProfile(username) {
   return axios.get(`https://api.github.com/users/${username}`)
   .then(user => {
-    console.log(user.data)
     return user.data
   })
 }
@@ -56,7 +55,6 @@ function sortPlayers(players){
 module.exports = {
 
   battle(players) {
-    console.log('players', players)
     return axios.all(players.map(getUserData))
     .then(sortPlayers)
   }, 
@@ -66,7 +64,6 @@ module.exports = {
 
     return axios.get(encoded)
     .then(response => {
-      console.log(response.data.items)
       return response.data.items
     });
   }
