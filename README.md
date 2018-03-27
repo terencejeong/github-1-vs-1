@@ -1,80 +1,12 @@
-```js
+A web application where you can vs your friends via Github! 
 
-class Popular extends Component {
+To visit the deployed version go to https://github-battle-d9bff.firebaseapp.com/
 
-  constructor (props) {
-    super(props);
-    this.state = {
-      selectedLanguage: 'All'
-    };
-    // bind property takes in a context and returns a brand new function.
-    // no matter what context this updateLangauge is going to be called in, it will always be called with the correct this keyword.
-    this.updateLanguage = this.updateLanguage.bind(this);
-  }
+To install locally follow the instructions below
 
-// will update the state based on what is selected.
-// before we didn
-  updateLanguage(lang) {
-    this.setState(function() {
-      return {
-        selectedLanguage: lang
-      }
-    })
-  }
+Clone the repo
+Run `npm install`
 
+Run  `npm run start` 
 
-  render() {
-  var languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python'];
-  console.log('up here', this)
-  return(
-      <ul className="languages" >
-        {languages.map(function(lang) {
-          console.log(this)
-          return (
-            <li key={lang} onClick={this.updateLanguage}>
-              {lang}
-            </li>
-          )
-        })}
-      </ul>
-    )
-  }
-}
-
-module.exports = Popular;
-```
-
-this, is still undefined in our map method. Mapping can take a second argument so we pass this in and should be a -ok
-
-```js
-updateLanguage(lang) {
-  this.setState(function() {
-    return {
-      selectedLanguage: lang
-    }
-  })
-}
-
-
-render() {
-var languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python'];
-console.log('up here', this)
-return(
-    <ul className="languages" >
-      {languages.map(function(lang) {
-        console.log(this)
-        return (
-          <li key={lang} onClick={this.updateLanguage}>
-            {lang}
-          </li>
-        )
-      }, this)}
-    </ul>
-  )
-}
-}
-
-module.exports = Popular;
-```
-
-```
+Enjoy!
