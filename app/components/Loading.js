@@ -19,22 +19,14 @@ class Loading extends Component {
     }
 
     componentDidMount(){
-        const stopper = this.props.text + '...'; 
+        const { text, speed } = this.props
+        const stopper = text + '...'; 
+
         this.interval = window.setInterval(() => {
-            if (this.state.text === stopper) {
-                this.setState(() => {
-                    return {
-                        text: this.props.text
-                    }
-                })
-            } else {
-                this.setState((prevState) => {
-                    return {
-                        text: prevState.text + '.'
-                    }
-                })
-            }
-        }, this.props.speed)
+            this.state.text === stopper
+            ? this.setState(() => ({text: this.props.text}))
+            : this.setState((prevState) => ({text: prevState.text + '.'}))
+        }, speed)
     }
 
     // Have to unmount otherwise the function this.interval will run every 300ms
@@ -43,6 +35,7 @@ class Loading extends Component {
     }
     
     render() {
+        
         return (
             <div style={styles.content}>
                 {this.state.text}

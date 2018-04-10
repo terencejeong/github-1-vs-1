@@ -1,34 +1,31 @@
 import React, { Component } from 'react';
 import Loading from './Loading'
-var PropTypes = require('prop-types');
-var api = require('../utils/api')
+const PropTypes = require('prop-types');
+const api = require('../utils/api')
 
 // stateless functional component.
 // Has no state. Recieve everything as props.
 // just a function that returns some UI - in this case will change the language red when click and map the languages.
-function SelectLanguage(props) {
-  var languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python'];
+function SelectLanguage({selectedLanguage, onSelect}) {
+  const languages = ['All', 'Javascript', 'Ruby', 'Java', 'CSS', 'Python'];
     return (
     <ul className="languages" >
-      {languages.map((lang) => {
-        return (
+      {languages.map((lang) => (
           <li
-            style={lang === props.selectedLanguage ? { color: '#d0021b' } : null }
+            style={lang === selectedLanguage ? { color: '#d0021b' } : null }
             key={lang}
-            onClick={props.onSelect.bind(null, lang)} >
+            onClick={() => onSelect(lang)} >
             {lang}
           </li>
-        )
-      })}
+      ))}
     </ul>
   )
 };
 
-function RepoGrid(props) {
+function RepoGrid({ repos }) {
   return (
     <ul className='popular-list'>
-      {props.repos.map((repo, index) => {
-        return(
+      {repos.map((repo, index) => (
         <li key={repo.name} className="popular-item">
             <div className='popular-rank'>#{index + 1}</div>
             <ul className="space-list-items">
@@ -43,8 +40,7 @@ function RepoGrid(props) {
               <li>{repo.stargazers_count} stars</li>
             </ul>
         </li>
-        )
-      })}
+        ))}
     </ul>
   )
 };
@@ -69,35 +65,27 @@ class Popular extends Component {
 
 // will update the state based on what is selected.
   updateLanguage(lang) {
-    this.setState(() => {
-      return {
-        selectedLanguage: lang,
-        repos: null
-      }
-    });
+    this.setState(() => ({selectedLanguage: lang, repos: null}));
+    
   // make the GET request in API.
     api.fetchPopularRepos(lang)
     .then((repos) => {
-      this.setState(() => {
-        return {
-          repos: repos
-        }
-      })
+      this.setState(() => ({ repos }))
     })
-   
-  }
+  };
 
   render() {
+    const {selectedLanguage, repos} = this.state
   return(
     <div>
       <SelectLanguage
-      selectedLanguage={this.state.selectedLanguage}
+      selectedLanguage={selectedLanguage}
       onSelect={this.updateLanguage}
       />
 
-      {!this.state.repos
+      {!repos
         ? <Loading text="Downloading" speed={300}/>
-      : <RepoGrid repos={this.state.repos} />}
+      : <RepoGrid repos={repos} />}
 
     </div>
     )
