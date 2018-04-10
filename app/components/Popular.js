@@ -47,48 +47,42 @@ function RepoGrid({ repos }) {
 
 class Popular extends Component {
 
-  constructor (props) {
-    super(props);
-    this.state = {
-      selectedLanguage: 'All',
-      repos: null
-    };
-    // bind property takes in a context and returns a brand new function.
-    // no matter what context this updateLangauge is going to be called in, it will always be called with the correct this keyword.
-    this.updateLanguage = this.updateLanguage.bind(this);
-  }
+  state = {
+    selectedLanguage: "All",
+    repos: null
+  }; 
 
   componentDidMount() {
     // AJAX request
-    this.updateLanguage(this.state.selectedLanguage)
+    this.updateLanguage(this.state.selectedLanguage);
   }
 
-// will update the state based on what is selected.
-  updateLanguage(lang) {
-    this.setState(() => ({selectedLanguage: lang, repos: null}));
+  // will update the state based on what is selected.
+  updateLanguage = async (lang) => {
+    this.setState(() => ({ selectedLanguage: lang, repos: null }));
+
+     // make the GET request in API.
+    const repos = await fetchPopularRepos(lang)
+    this.setState(() => ({repos})); 
     
-  // make the GET request in API.
-    fetchPopularRepos(lang)
-    .then((repos) => {
-      this.setState(() => ({ repos }))
-    })
-  };
+  }
 
   render() {
-    const {selectedLanguage, repos} = this.state
-  return(
-    <div>
-      <SelectLanguage
-      selectedLanguage={selectedLanguage}
-      onSelect={this.updateLanguage}
-      />
+    const { selectedLanguage, repos } = this.state;
+    return (
+      <div>
+        <SelectLanguage
+          selectedLanguage={selectedLanguage}
+          onSelect={this.updateLanguage}
+        />
 
-      {!repos
-        ? <Loading text="Downloading" speed={300}/>
-      : <RepoGrid repos={repos} />}
-
-    </div>
-    )
+        {!repos ? (
+          <Loading text="Downloading" speed={300} />
+        ) : (
+          <RepoGrid repos={repos} />
+        )}
+      </div>
+    );
   }
 }
 

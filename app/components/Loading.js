@@ -9,13 +9,11 @@ const styles = {
 }
 
 class Loading extends Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            text: props.text, 
-            speed: props.speed
-        }
+
+// Using transform-class-properties. 
+    state = {
+        text: this.props.text, 
+        speed: this.props.speed
     }
 
     componentDidMount(){
@@ -55,3 +53,13 @@ Loading.defaultProps = {
 }
 
 export default Loading;
+
+// old way. 
+    // constructor(props) {
+    //     super(props);
+        
+    //     this.state = {
+    //         text: props.text, 
+    //         speed: props.speed
+    //     }
+    // }

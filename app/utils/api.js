@@ -2,9 +2,9 @@ import axios from 'axios';
 
 // const params = `?client_id=${id}&client_secret`
 
-function getProfile(username) {
-  return axios.get(`https://api.github.com/users/${username}`)
-  .then((user) => user.data); 
+async function getProfile(username) {
+  const profile = await axios.get(`https://api.github.com/users/${username}`)
+  return profile.data
 }
 
 function getRepos(username) {
@@ -25,14 +25,16 @@ function handleError(error) {
   return null
 }
 
-function getUserData(player){
-  return Promise.all([
-    getProfile(player), 
-    getRepos(player)
-  ]).then(([profile, repos]) => ({ 
+async function getUserData(player){
+    const [ profile, repos ] = await Promise.all([
+      getProfile(player), 
+      getRepos(player)
+    ])
+
+    return {
       profile, 
       score: calculateScore(profile, repos)
-    }))
+    }
   }
 // since we destructured above don't need variables below. 
 // const profile = data[0]; 
@@ -44,15 +46,22 @@ function sortPlayers(players){
   return players.sort((a,b) => b.score - a.score)
 }
 
-export function battle(players) {
-  return Promise.all(players.map(getUserData))
-  .then(sortPlayers);
+export async function battle(players) {
+  const results = await Promise.all(players.map(getUserData))
+  .catch(handleError);
+
+  return results === null 
+  ? results 
+  : sortPlayers(results)
+ 
 }
 
-export function fetchPopularRepos(language) {
+export async function fetchPopularRepos(language) {
   const encoded = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+${language}:'/${language}/'&sort=stars&order=desc&type=Repositories`);
 
-  return axios.get(encoded).then(response => response.data.items);
+  const repos = await axios.get(encoded)
+    .catch(handleError);
+  return repos.data.items; 
 }
 
 // before refactor. 

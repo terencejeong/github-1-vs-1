@@ -55,25 +55,27 @@ class Results extends Component {
         }
     }
     
-    componentDidMount() {
+    async componentDidMount() {
         // this is from the url we are parsing
         const { playerOneName, playerTwoName} = queryString.parse(this.props.location.search)
 
-        battle([
+        const players = await battle([
             playerOneName, 
             playerTwoName
-        ]).then(result => {
-            if (result === null) {
-                this.setState(() => ({error: 'There was an error, check both users are on Github', loading: false}))
+        ])
+            if (players === null) {
+               return this.setState(() => ({
+                   error: 'There was an error, check both users are on Github', 
+                   loading: false
+                }))
             }
             this.setState(() => ({
                 error: null, 
-                winner: result[0], 
-                loser: result[1], 
+                winner: players[0], 
+                loser: players[1], 
                 loading: false
              })
-            )    
-        })
+        )    
     }; 
 
     render() {
