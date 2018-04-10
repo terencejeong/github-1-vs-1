@@ -1,4 +1,4 @@
-var axios = require('axios')
+import axios from 'axios'; 
 
 // const params = `?client_id=${id}&client_secret`
 
@@ -44,17 +44,29 @@ function sortPlayers(players){
   return players.sort((a,b) => b.score - a.score)
 }
 
-module.exports = {
-
-  battle(players) {
-    return axios.all(players.map(getUserData))
-    .then(sortPlayers)
-  }, 
-
-  fetchPopularRepos(language) {
-    const encoded = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+${language}:'/${language}/'&sort=stars&order=desc&type=Repositories`);
-
-    return axios.get(encoded)
-    .then(response => response.data.items);
-  }
+export function battle(players) {
+  return Promise.all(players.map(getUserData))
+  .then(sortPlayers);
 }
+
+export function fetchPopularRepos(language) {
+  const encoded = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+${language}:'/${language}/'&sort=stars&order=desc&type=Repositories`);
+
+  return axios.get(encoded).then(response => response.data.items);
+}
+
+// before refactor. 
+// module.exports = {
+
+//   battle(players) {
+//     return axios.all(players.map(getUserData))
+//     .then(sortPlayers)
+//   }, 
+
+//   fetchPopularRepos(language) {
+//     const encoded = window.encodeURI(`https://api.github.com/search/repositories?q=stars:>1+${language}:'/${language}/'&sort=stars&order=desc&type=Repositories`);
+
+//     return axios.get(encoded)
+//     .then(response => response.data.items);
+//   }
+// }

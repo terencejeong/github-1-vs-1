@@ -161,4 +161,4 @@ class Battle extends Component {
 }
 
 
-module.exports = Battle
+export default Battle;

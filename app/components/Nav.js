@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-const NavLink = require('react-router-dom').NavLink
+import { NavLink } from 'react-router-dom'
 
 function Nav() {
         return ( 
@@ -23,4 +23,4 @@ function Nav() {
        )
 }
 
-module.exports = Nav;
+export default Nav;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Loading from './Loading'
 const PropTypes = require('prop-types');
-const api = require('../utils/api')
+import {fetchPopularRepos} from '../utils/api';
 
 // stateless functional component.
 // Has no state. Recieve everything as props.
@@ -68,7 +68,7 @@ class Popular extends Component {
     this.setState(() => ({selectedLanguage: lang, repos: null}));
     
   // make the GET request in API.
-    api.fetchPopularRepos(lang)
+    fetchPopularRepos(lang)
     .then((repos) => {
       this.setState(() => ({ repos }))
     })
@@ -97,4 +97,4 @@ SelectLanguage.propTypes = {
   onSelect: PropTypes.func.isRequired
 }
 
-module.exports = Popular;
+export default Popular;

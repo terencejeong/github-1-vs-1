@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import PropTypes from 'prop-types';
 import PlayerPreview from './PlayerPreview'; 
 import Loading from './Loading';
-const api = require('../utils/api')
+import { battle } from '../utils/api'
 
 const Profile = ({ info }) => {
     
@@ -59,14 +59,14 @@ class Results extends Component {
         // this is from the url we are parsing
         const { playerOneName, playerTwoName} = queryString.parse(this.props.location.search)
 
-        api.battle([
+        battle([
             playerOneName, 
             playerTwoName
         ]).then(result => {
-
-            result === null 
-            ? this.setState(() => ({error: 'There was an error, check both users are on Github', loading: false}))
-            : this.setState(() => ({
+            if (result === null) {
+                this.setState(() => ({error: 'There was an error, check both users are on Github', loading: false}))
+            }
+            this.setState(() => ({
                 error: null, 
                 winner: result[0], 
                 loser: result[1], 

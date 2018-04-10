@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
-const ReactRouter = require('react-router-dom')
-const Router = ReactRouter.BrowserRouter
-const Route = ReactRouter.Route
-const Switch = ReactRouter.Switch
-const Popular = require('./Popular')
-const Nav = require('./Nav')
-const Home = require('./Home')
-const Battle = require('./Battle')
-import Results from './Results'
+import { BrowserRouter, Route, Switch} from 'react-router-dom'; 
+import Popular from './Popular';
+import Nav from './Nav';
+import Home from './Home';
+import Battle from './Battle';
+import Results from './Results';
 
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <BrowserRouter>
           <div className="container">
             <Nav />
             <Switch>
@@ -24,10 +21,10 @@ class App extends Component {
             <Route render={() => <p>Not Found</p>} />
             </Switch>
           </div>
-        </Router>
+        </BrowserRouter>
     )
   }
 
 };
 
-module.exports = App;
+export default App;
